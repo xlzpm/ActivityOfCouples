@@ -9,7 +9,7 @@ import org.koin.android.ext.koin.androidContext
 import org.koin.core.module.Module
 import org.koin.dsl.module
 
-val dbModule: Module = module {
+val localDBModule: Module = module {
     single<CoupleAppDatabase> {
         Room.databaseBuilder(
             androidContext(),

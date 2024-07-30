@@ -33,6 +33,9 @@ class DefaultSignInComponent(
             is SignInIntent.SignUpScreen -> onBackClicked()
             is SignInIntent.EmailChanged -> _state.update { it.copy(email = intent.email) }
             is SignInIntent.PasswordChanged -> _state.update { it.copy(password = intent.password) }
+            is SignInIntent.IsPasswordVisibleChanged -> _state.update {
+                it.copy(isPasswordVisible = intent.isPasswordVisibleChanged)
+            }
         }
     }
 

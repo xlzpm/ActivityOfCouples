@@ -3,14 +3,15 @@ plugins {
     alias(libs.plugins.jetbrains.kotlin.android)
     alias(libs.plugins.google.android.libraries.mapsplatform.secrets.gradle.plugin)
     alias(libs.plugins.compose.compiler)
+    alias(libs.plugins.google.gms.google.services)
 }
 
 android {
-    namespace = "com.example.training"
+    namespace = "com.example.app"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.example.training"
+        applicationId = "com.example.app"
         minSdk = 30
         targetSdk = 34
         versionCode = 1
@@ -57,8 +58,19 @@ android {
 }
 
 val koinVersion: String by project
+val decomposeVersion: String by project
+val coilVersion: String by project
 
 dependencies {
+    implementation(project(":shared:components"))
+    implementation(project(":firebase"))
+    implementation(project(":firebase:auth"))
+    implementation(project(":firebase:firestore"))
+    implementation(project(":localdb"))
+    implementation(project(":localdb:activities"))
+    implementation(project(":mvi"))
+    implementation(project(":network"))
+
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.lifecycle.viewmodel.compose)
@@ -69,6 +81,8 @@ dependencies {
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
     implementation(libs.generativeai)
+    implementation(libs.firebase.auth)
+    implementation(libs.firebase.firestore)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -76,6 +90,16 @@ dependencies {
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
+
+    // icons
+    implementation (libs.androidx.material.icons.extended)
+
+    // coil
+    implementation("io.coil-kt:coil-compose:$coilVersion")
+
+    // decompose
+    implementation("com.arkivanov.decompose:decompose:$decomposeVersion")
+    implementation("com.arkivanov.decompose:extensions-compose:$decomposeVersion")
 
     // koin
     implementation(platform("io.insert-koin:koin-bom:$koinVersion"))

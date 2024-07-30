@@ -23,7 +23,7 @@ rootProject.name = "Training"
 include(":app")
 include(":network")
 include(":localdb")
-include(":localdb:randomActivities")
+include(":localdb:activities")
 include(":firebase")
 include(":shared")
 include(":shared:components")

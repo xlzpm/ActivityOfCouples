@@ -37,7 +37,9 @@ val koinVersion: String by project
 val roomVersion: String by project
 
 dependencies {
-    implementation(project(":localdb:randomActivities"))
+
+    implementation(project(":localdb:activities"))
+    implementation(project(":network"))
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)

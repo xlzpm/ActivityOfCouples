@@ -17,6 +17,8 @@ import com.example.firestore.domain.repository.ActivityRepo
 import com.example.firestore.domain.repository.ConnectUserRepo
 import com.example.firestore.domain.repository.HistoryRepo
 import com.example.network.domain.repository.RandomActivityRepository
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.serialization.Serializable
 
 class DefaultAppComponent(
@@ -24,11 +26,13 @@ class DefaultAppComponent(
     private val activityRepo: ActivityRepo,
     private val randomActivityRepository: RandomActivityRepository,
     private val historyRepo: HistoryRepo,
-    private val connectUserRepo: ConnectUserRepo
+    private val connectUserRepo: ConnectUserRepo,
+    private val firebaseAuth: FirebaseAuth,
+    private val firestore: FirebaseFirestore
 ): AppComponent, ComponentContext by componentContext{
     private val navigation = StackNavigation<Config>()
 
-    override val stack: Value<ChildStack<*, Child>> =
+    override val child: Value<ChildStack<*, Child>> =
         childStack(
             source = navigation,
             serializer = Config.serializer(),
@@ -48,13 +52,16 @@ class DefaultAppComponent(
         DefaultMainComponent(
             componentContext = componentContext,
             activityRepo = activityRepo,
-            randomActivityRepository = randomActivityRepository
+            randomActivityRepository = randomActivityRepository,
+            firestore = firestore,
+            firebaseAuth = firebaseAuth
         )
 
     private fun historyComponent(componentContext: ComponentContext): HistoryComponent =
         DefaultHistoryComponent(
             componentContext = componentContext,
-            historyRepo = historyRepo
+            historyRepo = historyRepo,
+            firebaseAuth = firebaseAuth
         )
 
     private fun accountComponent(componentContext: ComponentContext): AccountComponent =

@@ -5,6 +5,7 @@ import com.arkivanov.decompose.value.MutableValue
 import com.arkivanov.decompose.value.Value
 import com.arkivanov.decompose.value.update
 import com.example.auth.domain.repository.signUp.SignUpRepository
+import com.example.mvi.signIn.SignInIntent
 import com.example.mvi.signUp.SignUpIntent
 import com.example.mvi.signUp.SignUpState
 import kotlinx.coroutines.CoroutineScope
@@ -34,6 +35,9 @@ class DefaultSignUpComponent(
             is SignUpIntent.SignInScreen -> onPrevClicked()
             is SignUpIntent.EmailChanged -> _state.update { it.copy(email = intent.email) }
             is SignUpIntent.PasswordChanged -> _state.update { it.copy(password = intent.password) }
+            is SignUpIntent.IsPasswordVisibleChanged -> _state.update {
+                it.copy(isPasswordVisible = intent.isPasswordVisibleChanged)
+            }
         }
     }
 

@@ -18,6 +18,8 @@ import com.example.firestore.domain.repository.ActivityRepo
 import com.example.firestore.domain.repository.ConnectUserRepo
 import com.example.firestore.domain.repository.HistoryRepo
 import com.example.network.domain.repository.RandomActivityRepository
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.serialization.Serializable
 
 class DefaultRootComponent(
@@ -28,7 +30,9 @@ class DefaultRootComponent(
     private val activityRepo: ActivityRepo,
     private val randomActivityRepository: RandomActivityRepository,
     private val historyRepo: HistoryRepo,
-    private val connectUserRepo: ConnectUserRepo
+    private val connectUserRepo: ConnectUserRepo,
+    private val firebaseAuth: FirebaseAuth,
+    private val firestore: FirebaseFirestore
 ) : RootComponent, ComponentContext by componentContext {
     private val navigation = StackNavigation<Config>()
 
@@ -69,7 +73,9 @@ class DefaultRootComponent(
             activityRepo = activityRepo,
             randomActivityRepository = randomActivityRepository,
             historyRepo = historyRepo,
-            connectUserRepo = connectUserRepo
+            connectUserRepo = connectUserRepo,
+            firebaseAuth = firebaseAuth,
+            firestore = firestore
         )
 
     @Serializable

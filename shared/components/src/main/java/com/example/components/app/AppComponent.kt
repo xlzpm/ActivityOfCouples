@@ -8,7 +8,7 @@ import com.example.components.app.main.MainComponent
 import kotlinx.serialization.Serializable
 
 interface AppComponent {
-    val stack: Value<ChildStack<*,Child>>
+    val child: Value<ChildStack<*,Child>>
 
     fun onMainClicked()
     fun onHistoryClicked()
