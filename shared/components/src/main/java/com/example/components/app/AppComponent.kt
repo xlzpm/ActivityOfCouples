@@ -16,8 +16,11 @@ interface AppComponent {
 
     @Serializable
     sealed class Child{
+        @Serializable
         class Main(val mainComponent: MainComponent): Child()
+        @Serializable
         class History(val historyComponent: HistoryComponent): Child()
+        @Serializable
         class Account(val accountComponent: AccountComponent): Child()
     }
 }

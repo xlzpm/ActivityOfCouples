@@ -1,5 +1,6 @@
 package com.example.components.app.main
 
+import android.util.Log
 import com.arkivanov.decompose.ComponentContext
 import com.arkivanov.decompose.value.MutableValue
 import com.arkivanov.decompose.value.Value
@@ -7,9 +8,7 @@ import com.arkivanov.decompose.value.update
 import com.example.firestore.domain.repository.ActivityRepo
 import com.example.mvi.main.MainIntent
 import com.example.mvi.main.MainState
-import com.example.network.domain.model.RandomActivity
 import com.example.network.domain.repository.RandomActivityRepository
-import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.CoroutineScope
@@ -39,13 +38,14 @@ class DefaultMainComponent(
                 val pairId = getPairId(userId)
                 _state.update { it.copy(userId = userId, pairId = pairId) }
             } catch (e: Exception) {
+                Log.e("DefaultMainComponent", e.message.orEmpty())
                 _state.update { it.copy(error = e.message) }
             }
         }
     }
 
     private fun getCurrentUserId(): String {
-        return firebaseAuth.currentUser?.uid ?: throw Exception("User not authenticated")
+        return firebaseAuth.currentUser?.email ?: throw Exception("User not authenticated")
     }
 
     private suspend fun getPairId(userId: String): String {
@@ -79,12 +79,13 @@ class DefaultMainComponent(
         coroutineScope.launch {
             _state.update { it.copy(isLoading = true) }
             try {
-                val activity = randomActivityRepository.getRandomActivityRepository().activity
+                val activity = randomActivityRepository.getRandomActivity().activity
                 activityRepo.sendActivityToPartner(pairId = pairId,
                     userId = userId, activity = activity)
                 _state.update { it.copy(activityDropped = activity,
                     isLoading = false, showActivityDialog = true) }
             } catch (e: Exception){
+                Log.e("DefaultMainComponent", e.message.orEmpty())
                 _state.update { it.copy(error = e.message, isLoading = false) }
             }
         }
@@ -99,6 +100,7 @@ class DefaultMainComponent(
                         showPartnerActivityDialog = true)
                 }
             } catch (e: Exception){
+                Log.e("DefaultMainComponent", e.message.orEmpty())
                 _state.update { it.copy(error = e.message) }
             }
         }
@@ -112,6 +114,7 @@ class DefaultMainComponent(
                     showPartnerActivityDialog = true )
                 }
             } catch (e: Exception){
+                Log.e("DefaultMainComponent", e.message.orEmpty())
                 _state.update { it.copy(error = e.message) }
             }
         }

@@ -1,6 +1,5 @@
 package com.example.randomActivities.data.repository
 
-import com.example.network.domain.model.RandomActivity
 import com.example.network.domain.repository.RandomActivityRepository
 import com.example.randomActivities.domain.dao.RandomActivitiesDao
 import com.example.randomActivities.domain.model.RandomActivitiesEntity
@@ -20,7 +19,7 @@ class RandomActivitiesDbRepositoryImpl(
     }
 
     override suspend fun getRandomActivity(): RandomActivitiesEntity {
-        val randomActivityEntity = randomActivityRepository.getRandomActivityRepository().toEntity()
+        val randomActivityEntity = randomActivityRepository.getRandomActivity().toEntity()
         randomActivityDao.addRandomActivity(randomActivityEntity = randomActivityEntity)
         return randomActivityEntity
     }

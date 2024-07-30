@@ -1,5 +1,6 @@
 package com.example.components.app.history
 
+import android.util.Log
 import com.arkivanov.decompose.ComponentContext
 import com.arkivanov.decompose.value.MutableValue
 import com.arkivanov.decompose.value.Value
@@ -31,13 +32,14 @@ class DefaultHistoryComponent(
                 val userId = getCurrentUserId()
                 _state.update { it.copy(userId = userId) }
             } catch (e: Exception) {
+                Log.e("DefaultHistoryComponent", "User not authenticated")
                 _state.update { it.copy(error = e.message) }
             }
         }
     }
 
     private fun getCurrentUserId(): String {
-        return firebaseAuth.currentUser?.uid ?: throw Exception("User not authenticated")
+        return firebaseAuth.currentUser?.email ?: throw Exception("User not authenticated")
     }
 
     override fun processIntent(intent: HistoryIntent) =
@@ -52,6 +54,7 @@ class DefaultHistoryComponent(
                 _state.update { it.copy(activities = activities) }
             } catch (e: Exception){
                 _state.update { it.copy(error = e.message) }
+                Log.e("DefaultHistoryComponent", e.message ?: "Unknown fucking shit")
             }
         }
     }

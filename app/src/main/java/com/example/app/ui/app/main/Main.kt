@@ -55,5 +55,4 @@ fun Main(
             Text("Generate Activity")
         }
     }
-    state.error?.let { Text(text = it) }
 }

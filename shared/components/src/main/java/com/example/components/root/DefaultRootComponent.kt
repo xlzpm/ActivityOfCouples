@@ -1,5 +1,6 @@
 package com.example.components.root
 
+import android.content.Context
 import android.content.SharedPreferences
 import com.arkivanov.decompose.ComponentContext
 import com.arkivanov.decompose.router.stack.ChildStack
@@ -32,7 +33,8 @@ class DefaultRootComponent(
     private val historyRepo: HistoryRepo,
     private val connectUserRepo: ConnectUserRepo,
     private val firebaseAuth: FirebaseAuth,
-    private val firestore: FirebaseFirestore
+    private val firestore: FirebaseFirestore,
+    private val context: Context
 ) : RootComponent, ComponentContext by componentContext {
     private val navigation = StackNavigation<Config>()
 
@@ -75,12 +77,16 @@ class DefaultRootComponent(
             historyRepo = historyRepo,
             connectUserRepo = connectUserRepo,
             firebaseAuth = firebaseAuth,
-            firestore = firestore
+            firestore = firestore,
+            context = context
         )
 
     @Serializable
     sealed interface Config{
+        @Serializable
         data object Auth: Config
+
+        @Serializable
         data object App: Config
     }
 

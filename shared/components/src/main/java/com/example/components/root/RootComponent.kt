@@ -11,7 +11,9 @@ interface RootComponent {
 
     @Serializable
     sealed class Child{
+        @Serializable
         class Auth(val authComponent: AuthComponent): Child()
+        @Serializable
         class App(val appComponent: AppComponent): Child()
     }
 }

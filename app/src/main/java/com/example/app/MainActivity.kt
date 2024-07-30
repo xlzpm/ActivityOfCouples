@@ -4,7 +4,6 @@ import android.content.Context
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.material3.Text
 import com.arkivanov.decompose.defaultComponentContext
 import com.example.app.ui.root.Root
 import com.example.app.ui.theme.TrainingTheme
@@ -18,9 +17,7 @@ import com.example.firestore.domain.repository.HistoryRepo
 import com.example.network.domain.repository.RandomActivityRepository
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
-import kotlinx.coroutines.tasks.await
 import org.koin.android.ext.android.getKoin
-import org.koin.core.KoinApplication.Companion.init
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -38,7 +35,8 @@ class MainActivity : ComponentActivity() {
             historyRepo = getKoin().get<HistoryRepo>(),
             connectUserRepo = getKoin().get<ConnectUserRepo>(),
             firebaseAuth = getKoin().get<FirebaseAuth>(),
-            firestore = getKoin().get<FirebaseFirestore>()
+            firestore = getKoin().get<FirebaseFirestore>(),
+            context = this
         )
 
         setContent {

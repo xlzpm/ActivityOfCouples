@@ -11,7 +11,9 @@ interface AuthComponent {
 
     @Serializable
     sealed class Child{
+        @Serializable
         class SignIn(val signInComponent: SignInComponent): Child()
+        @Serializable
         class SignUp(val signUpComponent: SignUpComponent): Child()
     }
 }

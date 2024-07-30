@@ -38,23 +38,23 @@ fun SignIn(
             isPassword = false,
             isPasswordVisible = true,
             onChangePasswordVisibility = {},
-            onValueChange = {
-                signInComponent.processIntent(SignInIntent.EmailChanged(state.email))
+            onValueChange = { newValue ->
+                signInComponent.processIntent(SignInIntent.EmailChanged(newValue))
             }
         )
         Spacer(modifier = Modifier.height(10.dp))
         ChangeTextField(
-            valueChange = state.email,
+            valueChange = state.password,
             label = "Password",
             description = "********",
             isPassword = true,
             isPasswordVisible = state.isPasswordVisible,
             onChangePasswordVisibility = {
                 signInComponent
-                    .processIntent(SignInIntent.IsPasswordVisibleChanged(state.isPasswordVisible))
+                    .processIntent(SignInIntent.IsPasswordVisibleChanged(!state.isPasswordVisible))
             },
-            onValueChange = {
-                signInComponent.processIntent(SignInIntent.PasswordChanged(state.password))
+            onValueChange = { newValue ->
+                signInComponent.processIntent(SignInIntent.PasswordChanged(newValue))
             }
         )
         Spacer(modifier = Modifier.height(20.dp))

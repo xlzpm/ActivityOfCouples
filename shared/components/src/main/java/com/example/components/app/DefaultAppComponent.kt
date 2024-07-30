@@ -1,5 +1,6 @@
 package com.example.components.app
 
+import android.content.Context
 import com.arkivanov.decompose.ComponentContext
 import com.arkivanov.decompose.router.stack.ChildStack
 import com.arkivanov.decompose.router.stack.StackNavigation
@@ -28,7 +29,8 @@ class DefaultAppComponent(
     private val historyRepo: HistoryRepo,
     private val connectUserRepo: ConnectUserRepo,
     private val firebaseAuth: FirebaseAuth,
-    private val firestore: FirebaseFirestore
+    private val firestore: FirebaseFirestore,
+    private val context: Context
 ): AppComponent, ComponentContext by componentContext{
     private val navigation = StackNavigation<Config>()
 
@@ -67,7 +69,9 @@ class DefaultAppComponent(
     private fun accountComponent(componentContext: ComponentContext): AccountComponent =
         DefaultAccountComponent(
             componentContext = componentContext,
-            connectUserRepo = connectUserRepo
+            connectUserRepo = connectUserRepo,
+            context = context,
+            firebaseAuth = firebaseAuth
         )
 
     override fun onMainClicked() {
@@ -84,8 +88,11 @@ class DefaultAppComponent(
 
     @Serializable
     sealed interface Config{
+        @Serializable
         data object Main: Config
+        @Serializable
         data object History: Config
+        @Serializable
         data object Account: Config
     }
 }

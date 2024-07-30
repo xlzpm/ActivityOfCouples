@@ -57,7 +57,9 @@ class DefaultAuthComponent(
 
     @Serializable
     private sealed interface Config{
+        @Serializable
         data object SignIn: Config
+        @Serializable
         data object SignUp: Config
     }
 }

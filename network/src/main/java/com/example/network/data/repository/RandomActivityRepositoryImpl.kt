@@ -9,6 +9,6 @@ import io.ktor.client.request.get
 class RandomActivityRepositoryImpl(
     private val httpClient: HttpClient
 ) : RandomActivityRepository {
-    override suspend fun getRandomActivityRepository(): RandomActivity = httpClient
+    override suspend fun getRandomActivity(): RandomActivity = httpClient
         .get("random").body<RandomActivity>()
 }
